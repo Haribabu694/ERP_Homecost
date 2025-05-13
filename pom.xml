@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.project</groupId>
-	<artifactId>jpa_Advanced_mappings</artifactId>
+	<artifactId>Practice_Springboot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>jpa_Advanced_mappings</name>
+	<name>Practice_Springboot</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
