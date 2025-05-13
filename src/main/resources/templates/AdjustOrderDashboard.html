@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Adjust Order Dashboard</title>
+<link rel="stylesheet" href="css/AdjustOrder.css">
+</head>
+<body>
+
+<div class="top-header">
+<img src="images/logo.jpg" alt="logo" class="logo">
+<h2 class="heading">Adjust Order</h2>
+<a class="logout" href="/logout"> Logout </a>
+</div>
+<br>
+
+<marquee class="scrooltag" >Adjust Order Dashboard</marquee>
+<br>
+<label class="labelHeading">Warehouse Adjust Orders</label>
+<br><br>
+<div>
+
+<a href="/NewAdjustOrder"><button type="button" class="buttons" name="newButton">New</button></a>
+<!-- Edit and View Buttons -->
+<button type="button" class="buttons" onclick="handleEditButtonClick()">Edit</button>
+<button type="button" class="buttons" onclick="handleViewButtonClick()">View</button>
+<a href="/home"><button type="button" class="buttons" name="backButton">Back</button></a>
+
+<form action="/adjFilter" method="get" class="filter-container" >
+    <label class="labelItem">Item</label>
+    <input type="text" id="item" class="textFilter" name="item" placeholder="Enter Item" th:value="${item}" />
+    <button type="submit" class="buttonfilter">Filter</button>
+</form>
+
+<table border="1" class="adjust-order-table">
+    <thead class="tableheader">
+        <tr>
+            <th>Select</th>
+            <th>Item</th>
+            <th>Warehouse</th>
+            <th>Bin</th>
+            <th>Adjust Quantity</th>
+            <th>Units</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${#lists.isEmpty(adjustOrders)}">
+        <td colspan="7">No Records Found</td>
+    </tr>
+        <tr th:each="order : ${adjustOrders}">
+            <td>
+               <input type="checkbox" name="selectedOrders" th:value="${order.item}" onclick="selectOnlyOne(this)" />
+            </td>
+            <td th:text="${order.item}">Item</td>
+            <td th:text="${order.warehouse}">Warehouse</td>
+            <td th:text="${order.bin}">Bin</td>
+            <td th:text="${order.adjustQuantity}">Quantity</td>
+            <td th:text="${order.units}">Units</td>
+        </tr>
+    </tbody>
+</table>
+
+ <!-- Show message if no data found -->
+    <div th:if="${message}">
+        <p th:text="${message}" style="color:red; font-weight:bold;"></p>
+    </div>
+
+</div>
+
+<script>
+    function selectOnlyOne(checkbox) {
+        document.querySelectorAll('input[name="selectedOrders"]').forEach(cb => {
+            if (cb !== checkbox) cb.checked = false;
+        });
+    }
+    
+    function handleEditButtonClick() {
+        let selectedOrder = document.querySelector('input[name="selectedOrders"]:checked');
+        if (selectedOrder) {
+            let itemId = selectedOrder.value;
+            window.location.href = '/editAdjustOrder?id=' + itemId;
+        } else {
+            alert('Please select an item to edit.');
+        }
+    }
+
+    function handleViewButtonClick() {
+        let selectedOrder = document.querySelector('input[name="selectedOrders"]:checked');
+        if (selectedOrder) {
+            let itemId = selectedOrder.value;
+            window.location.href = '/viewAdjustOrder?id=' + itemId + '&action=view';
+        } else {
+            alert('Please select an item to view.');
+        }
+    }
+</script>
+<div class="bottom-header">
+<p> Designed by Hari</p>
+</div>
+</body>
+</html>

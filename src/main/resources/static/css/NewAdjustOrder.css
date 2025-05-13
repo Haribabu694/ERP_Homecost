@@ -1,0 +1,88 @@
+.lblManageorder {
+	color: brown;
+	font-size: 25px;
+}
+
+.centralcontainer {
+	justify-content: left;
+	align-items: left;
+}
+
+form {
+	padding: 40px 200px;
+}
+
+.top-header {
+	background-color: brown;
+	color: white;
+	padding: 25px;
+	text-align: center;
+	position: relative;
+	width: 97%;
+}
+
+.bottom-header {
+	background-color: brown;
+	color: white;
+	padding: 25px;
+	font-size: 20px;
+	text-align: center;
+	position: fixed;
+	width: 97%;
+	bottom: 0;
+}
+
+.textbox {
+	border: 1px solid #ccc;
+	padding: 8px;
+	width: 250px;
+	height: 15px;
+	border-radius: 5px;
+}
+
+.textbox:focus, .dropdown:focus {
+	border: 2px solid skyblue;
+	outline: none; /* ensures no default focus outline */
+	box-shadow: none; /* remove any browser-added shadows */
+}
+
+.required-star {
+	color: red;
+}
+
+.dropdown {
+	border: 1px solid #ccc;
+	padding: 8px;
+	width: 267px;
+	height: 35px;
+	border-radius: 5px;
+}
+
+.buttons {
+	background-color: blue;
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+	padding: 8px 12px;
+}
+
+.buttons:hover {
+	background-color: #70105c
+}
+
+.alert-success {
+	color: green;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.error {
+	color: red;
+	font-size: 17px;
+}
+
+.field-error {
+    border: 2px solid red;
+    outline: none;
+}

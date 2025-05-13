@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Home page</title>
+<link rel="stylesheet" href="css/Home.css">
+</head>
+<body>
+
+<div class="top-header">
+<img src="images/logo.jpg" alt="logo" class="logo">
+
+<div class="menu-container">
+        <span class="menu-title">Warehouse Mgmt</span>
+        <div class="dropdown-content">
+            <a href="/adoDashboard">Adjust Orders</a>
+            <a href="/transferorder">Transfer Orders</a>
+        </div>
+   </div>
+
+<h2 class="heading">Home Page</h2>
+<a class="logout" href="/logout"> Logout </a>
+</div>
+
+ <nav class="sidebar">
+    <h3>Navigation</h3>
+    <a href="#">Home</a>
+    <a href="#">Services</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </nav>
+  
+  <div class="pretext">
+  <pre>       Hi,
+       I' am <label class="hari">Hari</label>
+       Web Designer
+  </pre>
+  </div>
+  
+  <button type="button" name="contact" class="buttons">Contact</button>
+  
+  <div class="hariimage">
+  <img src="images/Hari_image.jpeg" alt="hariimage">
+  </div>
+  
+  <div id="contact-info" class="contact-info">
+   <p><b>Phone No:</b>  +91 6301590512</p>
+   </div>
+
+<div class="bottom-header">
+<p>Designed by Hari</p>
+</div>
+
+<script>
+  document.querySelector('.buttons').addEventListener('click', function () {
+    const info = document.getElementById('contact-info');
+    info.style.display = info.style.display === 'none' ? 'block' : 'none';
+  });
+</script>
+
+</body>
+</html>
