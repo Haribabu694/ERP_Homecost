@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login Page</title>
+<link rel="stylesheet" href="css/Login.css">
+</head>
+<body>
+
+<div class="top-header">
+<img src="images/logo.jpg" alt="logo" class="logo">
+<h2 class="heading">Login Form</h2>
+</div>
+
+<div class="loginform">
+
+<form>
+
+<label class="labelheading">Welcome To Login Form</label><br><br><br>
+
+<b>UserName:</b> <input type="text" name="username" placeholder="Enter Username"><br><br>
+
+&nbsp;<b>Password:</b>&nbsp; <input type="password" name="password" placeholder="Enter Password"><br><br>
+
+<button type="submit" class="buttons" name="sign in">Sign in</button>
+
+&nbsp;&nbsp;&nbsp; <a class="forgotlink" href="/updatepassword">Forgot password</a>
+
+<!-- Error message display -->
+<p th:text="${error}" class="error" style="text-align: center;"></p>
+
+</form>
+
+</div>
+
+<div class="bottom-header">
+<p>Designed by Hari</p>
+</div>
+
+</body>
+</html>
