@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Home Cost</title>
+<link rel="stylesheet" href="css/HomeCost.css">
+</head>
+<body>
+
+<div class="top-header">
+<img src="images/logo.jpg" alt="logo" class="logo">
+<h2 class="heading">Home Cost</h2>
+<div class="user-info">
+        <span style="color: aqua;">Hello..<strong th:text="${username}"></strong></span>&nbsp;&nbsp;&nbsp;
+<a class="logout" href="/logout"> Logout </a>
+</div>
+</div><br>
+
+<label class="labelHeading">Home Cost Dashboard</label>
+<br><br>
+
+<div>
+
+<a href="/newHomeCostOrder"><button type="button" class="drpYearFilter" name="newButton">New</button></a>
+<!-- Edit and View Buttons -->
+<button type="button" class="drpYearFilter" onclick="handleEditButtonClick()">Edit</button>
+<button type="button" class="drpYearFilter" onclick="handleViewButtonClick()">View</button>
+<button type="button" class="drpYearFilter" onclick="handleDeleteButtonClick()">Delete</button>
+<a href="/home"><button type="button" class="drpYearFilter" name="backButton">Back</button></a>
+<br><br>
+
+<form method="get" action="/itemFilter" style="margin-bottom: 15px;" >
+    <label for="selectedYear" >Year</label>
+    <select name="year" id="selectedYear" class="drpYearandMonth">
+        <option value="">-Year-</option>
+        <option th:each="y : ${years}" th:value="${y}" th:text="${y}" 
+                th:selected="${y == selectedYear}">2025</option>
+    </select>
+
+    <label for="selectedMonth">Month</label>
+    <select name="month" id="selectedMonth" class="drpYearandMonth">
+        <option value="">-Month-</option>
+        <option th:each="m : ${months}" th:value="${m.key}" th:text="${m.value}" 
+                th:selected="${m.key == selectedMonth}"></option>
+    </select>
+    
+    <label class="labelItem">Item</label>
+    <input type="text" id="item" class="drpYearandMonth" name="item" placeholder="Enter Item" th:value="${item}" />
+    
+    <button type="submit" class="drpYearFilter" >Filter</button>
+    
+    <img src="images/clear.png" alt="clear" title="Clear" class="clearicon" onclick="clearFilterForm()" />
+</form>
+</div>
+
+<form id="paginationForm" method="get" th:action="@{/homeCostDashboard}">
+    <input type="hidden" name="page" id="pageInput" th:value="${currentPage}" />
+    <input type="hidden" name="size" th:value="${pageSize}" />
+    <!-- Include any filters like year/month here as hidden inputs -->
+</form>
+
+<script th:inline="javascript">
+    const currentPage = /*[[${currentPage}]]*/ 0;
+    const totalPages = /*[[${totalPages}]]*/ 1;
+
+    function goToPage(page) {
+        if (page < 0 || page >= totalPages) return;
+        document.getElementById("pageInput").value = page;
+        document.getElementById("paginationForm").submit();
+    }
+</script>
+
+
+<img src="images/first.png" alt="first" title="First" class="firsticon" onclick="goToPage(0)" />
+<img src="images/previous.png" alt="previous" title="Previous" class="previousicon" onclick="goToPage(currentPage - 1)" />
+<!-- show total rows  -->
+<span>Items : <span th:text="${totalRecords}">0</span></span>
+<img src="images/next.png" alt="next" title="Next" class="nexticon" onclick="goToPage(currentPage + 1)" />
+<img src="images/last.png" alt="last" title="Last" class="lasticon" onclick="goToPage(totalPages - 1)" />
+
+<table border="1" class="adjust-order-table">
+    <thead class="tableheader">
+        <tr>
+            <th>Select</th>
+            <th>Item ID</th>
+            <th>Item Name</th>
+            <th>Item Cost</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody">
+    <tr th:if="${#lists.isEmpty(adjustOrders)}">
+        <td colspan="7">No Records Found</td>
+    </tr>
+        <tr th:each="order : ${adjustOrders}">
+            <td>
+               <input type="checkbox" name="selectedOrders" th:value="${order.sno}" onclick="selectOnlyOne(this)" />
+            </td>
+            <td th:text="${order.sno}">S No</td>
+            <td th:text="${order.item}">Item</td>
+            <td th:text="${order.cost}">Cost</td>
+            <td th:text="${#dates.format(order.date, 'dd-MMM-yyyy')}"></td>
+        </tr>
+       <!-- Total Row only if filtered -->
+<tr th:if="${filtered}" style="font-weight: bold; background-color: #f8d7da;">
+    <td colspan="3" style="text-align: right;">Total :</td>
+    <td th:text="${totalCost}">0.00</td>
+    <td></td>
+</tr>
+       
+
+    </tbody>
+</table>
+
+ <!-- Show message if no data found -->
+    <div th:if="${message}">
+        <p th:text="${message}" style="color:red; font-weight:bold;"></p>
+    </div>
+
+</div>
+
+<input type="hidden" id="currentPage" th:value="${currentPage}" />
+<input type="hidden" name="page" th:value="${currentPage}" />
+<input type="hidden" id="totalRecords" th:value="${totalRecords}" />
+
+<script>
+    function selectOnlyOne(checkbox) {
+        document.querySelectorAll('input[name="selectedOrders"]').forEach(cb => {
+            if (cb !== checkbox) cb.checked = false;
+        });
+    }
+    
+    function handleEditButtonClick() {
+        let selectedOrder = document.querySelector('input[name="selectedOrders"]:checked');
+        if (selectedOrder) {
+            let itemId = selectedOrder.value;
+            window.location.href = '/editAdjustOrder?id=' + itemId;
+        } else {
+            alert('Please select an item to edit.');
+        }
+    }
+
+    function handleViewButtonClick() {
+        let selectedOrder = document.querySelector('input[name="selectedOrders"]:checked');
+        if (selectedOrder) {
+            let itemId = selectedOrder.value;
+            window.location.href = '/viewAdjustOrder?id=' + itemId + '&action=view';
+        } else {
+            alert('Please select an item to view.');
+        }
+    }
+    
+    function clearFilterForm() {
+        document.getElementById("selectedYear").value = "";
+        document.getElementById("selectedMonth").value = "";
+        document.getElementById("item").value = "";
+        document.forms[0].submit(); // Re-submit to clear filters
+    }
+    
+    function handleDeleteButtonClick() {
+        let selectedOrder = document.querySelector('input[name="selectedOrders"]:checked');
+        if (selectedOrder) {
+            let itemId = selectedOrder.value;
+            if (confirm('Are you sure you want to delete this item?')) {
+                window.location.href = '/deleteHomeCostOrder?id=' + itemId;
+            }
+        } else {
+            alert('Please select an item to delete.');
+        }
+    }
+    
+</script>
+
+
+<div class="bottom-header">
+<p>Designed by Hari</p>
+</div>
+
+</body>
+</html>

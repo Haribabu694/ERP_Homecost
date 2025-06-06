@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>New HomeCostOrder</title>
+<link rel="stylesheet" href="css/NewHomeCostOrder.css">
+</head>
+<body>
+<div class="top-header">
+<img src="images/logo.jpg" alt="logo" class="logo">
+<h2 class="heading">Home Cost</h2>
+<div class="user-info">
+        <span style="color: aqua;">Hello..<strong th:text="${username}"></strong></span>&nbsp;&nbsp;&nbsp;
+<a class="logout" href="/logout"> Logout </a>
+</div>
+</div>
+
+</div>
+<div class="centralcontainer">
+<form id="newAdjustOrderForm" action="#" th:action="@{/homeCostsave}" th:object="${adjustOrder}" method="post">
+<label class="lblManageorder">Manage HomeCost Order</label>
+<hr>
+<br>
+<br>
+<span class="required-star">*</span> S No: &nbsp;&nbsp;&nbsp;<input type="text"  th:field="*{sno}" class="textbox" th:classappend="${#fields.hasErrors('sno')} ? ' field-error' : ''" name="sno" value="${adjustOrder.sno}" th:disabled="${action == 'view'}" readonly ></input>
+<span class="error" th:if="${#fields.hasErrors('sno')}" th:errors="*{sno}"></span>
+<br>
+<br>
+<span class="required-star">*</span> Item:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" th:field="*{item}" class="textbox" th:classappend="${#fields.hasErrors('item')} ? ' field-error' : ''" placeholder="Enter Item" value="${adjustOrder.item}" th:disabled="${action == 'view'}" >
+<span class="error" th:if="${#fields.hasErrors('item')}" th:errors="*{item}"></span>
+<br>
+<br>
+<span class="required-star">*</span> Cost:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="number" step="0.01" min="0.01" th:field="*{cost}" class="textbox" th:classappend="${#fields.hasErrors('cost')} ? ' field-error' : ''" placeholder="Enter Cost" value="${adjustOrder.cost}" th:disabled="${action == 'view'}" >
+<span class="error" th:if="${#fields.hasErrors('cost')}" th:errors="*{cost}"></span>
+<br>
+<br>
+<span class="required-star">*</span> Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="date" th:field="*{date}" class="textbox" id="dateField" th:classappend="${#fields.hasErrors('date')} ? ' field-error' : ''" placeholder="Enter Date" value="${adjustOrder.date}" th:disabled="${action == 'view'}" >
+<span class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span>
+<br>
+<br>
+<br>
+<button type="submit" class="buttons" name="Save" th:disabled="${action == 'view'}" >Save</button>
+<a href="/homeCostDashboard"><button type="button" class="buttons" name="Back">Back</button></a>
+<a href="/newHomeCostOrder"><button type="button" class="buttons" name="newButton" th:disabled="${action == 'view'}" >New</button></a>
+<button type="button" class="buttons" name="Clear" onclick="clearForm()" th:disabled="${action == 'view'}">Clear</button>
+
+<div th:if="${successMessage}" class="alert-success">
+    <p th:text="${successMessage}"></p>
+</div>
+
+<div th:if="${errorMessage}" class="alert-error">
+    <p th:text="${errorMessage}"></p>
+</div>
+
+</form>
+<script>
+function clearForm() {
+    const form = document.getElementById('newAdjustOrderForm');
+    form.reset();
+
+    // If using Thymeleaf bindings with `th:field`, also clear error styles if needed
+    const errorFields = form.querySelectorAll('.field-error');
+    errorFields.forEach(el => el.classList.remove('field-error'));
+}
+
+//Set max date to today
+window.onload = function () {
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('dateField').setAttribute('max', today);
+};
+</script>
+</div>
+
+<div class="bottom-header">
+<p>Designed by Hari</p>
+</div>
+
+</div>
+</body>
+</html>

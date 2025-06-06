@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Create Account</title>
+<link rel="stylesheet" href="css/CreateAccount.css">
+</head>
+<body>
+<div class="top-header">
+    <img src="images/logo.jpg" alt="logo" class="logo">
+    <h2 class="heading">Create Account</h2>
+    <a class="logout" href="/logout"> Logout </a>
+</div>
+
+<div class="centralcontainer">
+    <br><br>
+    <label class="lblManageorder">Manage UserAccount</label>
+    <hr>
+
+    <form id="createAccountForm" action="/createAccount" method="post">
+        <input type="hidden" id="sno" name="sno" />
+
+        <span class="required-star">*</span> Username:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" class="textbox" name="username" id="username" placeholder="Enter Username" required />
+        <span id="usernameMessage" style="color:red;"></span>
+        <br><br>
+
+        <span class="required-star">*</span> Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="email" class="textbox" id="mailid" name="mailid" placeholder="Enter Email" required />
+        <br><br>
+
+        <span class="required-star">*</span> DateOfBirth:&nbsp;&nbsp;
+        <input type="date" class="textbox" name="dateofbirth" id="dateofbirth" required />
+        <br><br>
+
+        <span class="required-star">*</span>
+        <label for="gender">Gender:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <select name="gender" id="gender" class="dropdowngender" required>
+            <option value="">--Select Gender--</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+        <br><br>
+
+        <span class="required-star">*</span> Age:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="number" class="textbox" name="age" id="age" placeholder="Enter Age" readonly required />
+        <br><br>
+
+        <button type="submit" class="buttons" name="Createaccount">Create Account</button>
+        <a href="/login"><button type="button" class="buttons">Back</button></a>
+        <button type="button" class="buttons" onclick="clearForm()">Clear</button>
+    </form>
+
+    <div th:if="${successMessage}" class="alert-success">
+        <p th:text="${successMessage}"></p>
+    </div>
+
+    <div th:if="${errorMessage}" class="alert-error">
+        <p th:text="${errorMessage}"></p>
+    </div>
+</div>
+
+<script>
+    function clearForm() {
+        document.getElementById('createAccountForm').reset();
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById("dateofbirth").setAttribute("max", today);
+
+        const dobInput = document.getElementById("dateofbirth");
+        const ageInput = document.getElementById("age");
+
+        dobInput.addEventListener("change", function () {
+            const dob = new Date(this.value);
+            const now = new Date();
+            let age = now.getFullYear() - dob.getFullYear();
+            const m = now.getMonth() - dob.getMonth();
+            if (m < 0 || (m === 0 && now.getDate() < dob.getDate())) {
+                age--;
+            }
+            ageInput.value = age >= 0 ? age : '';
+        });
+
+        // Username check
+        const usernameInput = document.getElementById("username");
+        const usernameMessageSpan = document.getElementById("usernameMessage");
+
+        usernameInput.addEventListener("blur", function () {
+            const username = this.value.trim();
+            if (username.length === 0) {
+                usernameMessageSpan.textContent = '';
+                return;
+            }
+
+            fetch(`/checkUsername?username=${encodeURIComponent(username)}`)
+                .then(response => response.json())
+                .then(exists => {
+                    usernameMessageSpan.textContent = exists ? "Username already exists" : "";
+                })
+                .catch(err => {
+                    console.error("Error checking username", err);
+                });
+        });
+       
+    });
+</script>
+
+
+<div class="bottom-header">
+    <p>Designed by Hari</p>
+</div>
+</body>
+</html>

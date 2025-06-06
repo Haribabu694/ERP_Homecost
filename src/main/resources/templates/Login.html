@@ -14,7 +14,7 @@
 
 <div class="loginform">
 
-<form action="/login" method="post">
+<form th:action="@{/login}" method="post">
 
 <label class="labelheading">Welcome To Login Form</label><br><br><br>
 
@@ -24,7 +24,9 @@
 
 <button type="submit" class="buttons" name="sign in">Sign in</button>
 
-&nbsp;&nbsp;&nbsp; <a class="forgotlink" href="/updatepassword">Forgot password</a>
+&nbsp;&nbsp;&nbsp; <a class="forgotlink" href="/forgotpassword">Forgot password</a>
+
+<br><br>&nbsp;&nbsp;<label>Don't have account? </label><a class="createAccount" href="/createAccount">Create an account</a>
 
 <!-- Error message display -->
 <p th:text="${error}" class="error" style="text-align: center;"></p>

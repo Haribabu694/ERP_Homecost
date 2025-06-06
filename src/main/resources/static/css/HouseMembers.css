@@ -1,0 +1,49 @@
+.top-header {
+	top: 0;
+	background-color: brown;
+    color: white;
+    padding: 6px;
+    text-align: center;
+    position: relative;
+    width: 100%; /* Use viewport width */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bottom-header {
+	background-color: brown;
+    color: white;
+    padding: 6px;
+    font-size: 16px;
+    text-align: center;
+    position: fixed;
+    width: 100%; /* Use viewport width */
+    bottom: 0;
+}
+.heading {
+	color: white;
+	text-align: center;
+	font-size: 20px;
+	margin-left:-10px;
+}
+.logout{
+  color: #99FFCC;
+  font-size: 18px;
+  text-decoration: none;
+}
+.logout:hover{
+  text-decoration: underline;
+}
+.logout:active{
+	color:#ffff80;
+}
+.logo{
+	height:40px;
+	margin-left:8px;
+}
+.background-image{
+	width: 90px;
+    height: 90px;
+    margin: -20px;
+}

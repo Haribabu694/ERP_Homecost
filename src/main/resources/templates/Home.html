@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Home page</title>
+<link rel="stylesheet" href="css/Home.css">
+</head>
+<body>
+
+<div class="top-header">
+<img src="images/logo.jpg" alt="logo" class="logo">
+
+<div class="menu-container">
+      <span class="menu-title">House Mgmt</span>
+        <div class="dropdown-content">
+            <a href="/housemembers">House Members</a>
+            <a href="/homeCostDashboard">Home Cost</a>
+        </div>
+   </div>
+
+<h2 class="heading">Home Page</h2>
+<div class="user-info">
+        <a class="Changepassword" href="/updatepassword"> Change Password </a>&nbsp;&nbsp;
+        <span style="color: aqua;">Hello..<strong th:text="${username}"></strong></span>&nbsp;&nbsp;&nbsp;
+        <a class="logout" href="/logout"> Logout </a>
+</div>
+</div>
+
+ <nav class="sidebar">
+    <h3>Navigation</h3>
+    <a href="#">Home</a>
+    <a href="#">Services</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </nav>
+  
+  <div class="welcomeuser">
+  <span class="welcome">Welcome, <strong th:text="${username}"></strong></span>
+  </div>
+  
+  <div class="pretext">
+  <pre>       Hi,
+       I' am <label class="hari">Hari</label>
+       Web Designer
+  </pre>
+  </div>
+  
+  <button type="button" name="contact" class="buttons">Contact</button>
+  
+  
+  <div id="contact-info" class="contact-info">
+   <p><b>Phone No:</b>  +91 </p>
+   </div>
+
+<div class="bottom-header">
+<p>Designed by Hari</p>
+</div>
+
+<script>
+  document.querySelector('.buttons').addEventListener('click', function () {
+    const info = document.getElementById('contact-info');
+    info.style.display = info.style.display === 'none' ? 'block' : 'none';
+  });
+</script>
+
+</body>
+</html>
