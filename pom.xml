@@ -13,6 +13,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Practice_Springboot</name>
 	<description>Demo project for Spring Boot</description>
+	
 	<url/>
 	<licenses>
 		<license/>
@@ -98,6 +99,13 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+           <groupId>org.springframework.boot</groupId>
+           <artifactId>spring-boot-starter-tomcat</artifactId>
+           <scope>provided</scope>
+        </dependency>
+
 		
 	</dependencies>
 
