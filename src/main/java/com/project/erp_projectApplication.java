@@ -10,7 +10,7 @@ public class erp_projectApplication extends SpringBootServletInitializer{
 	
 	 @Override
 	    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-	        return application.sources(erp_projectApplication.class);
+	        return application.sources(erp_projectApplication.class); 
 	    }
 
 	public static void main(String[] args) {
