@@ -1,14 +1,12 @@
-# Use an official OpenJDK runtime as a parent image
-FROM maven:4.0.0-openjdk-21 AS
+# Stage 1: Build the application
+FROM maven:3.9.6-eclipse-temurin-21 AS build
+WORKDIR /app
 COPY . .
 RUN mvn clean install
 
-#
-From eclipse-temurin:21-jdk
-COPY --from=build /target/Practice_Springboot-0.0.1-SNAPSHOT.jar demo.jar
-
-# Expose the port your app runs on (default is 8080)
+# Stage 2: Run the application
+FROM eclipse-temurin:21-jdk
+WORKDIR /app
+COPY --from=build /app/target/Practice_Springboot-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
-
-# Run the jar file
-ENTRYPOINT ["java", "-jar", "demo.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
