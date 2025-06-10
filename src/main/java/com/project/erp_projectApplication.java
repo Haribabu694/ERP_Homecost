@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class erp_projectApplication {
-
+   
 	public static void main(String[] args) {
-		SpringApplication.run(erp_projectApplication.class, args);
+		SpringApplication.run(erp_projectApplication.class, args); //Main application
 	}
 
 }
